@@ -25,9 +25,15 @@ public class NoticeListAdapter extends RecyclerView.Adapter<NoticeListAdapter.My
     private List<Notice> dataList;
     private  OnItemClickListner listner;
 
+    private  boolean removeDeleteButton=false;
     public NoticeListAdapter(Context context, List<Notice> dataList) {
         this.context = context;
         this.dataList = dataList;
+    }
+    public NoticeListAdapter(Context context, List<Notice> dataList,boolean removeDeleteButton) {
+        this.context = context;
+        this.dataList = dataList;
+        this.removeDeleteButton=removeDeleteButton;
     }
 
     @NonNull
@@ -40,12 +46,15 @@ public class NoticeListAdapter extends RecyclerView.Adapter<NoticeListAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
        Notice item=dataList.get(position);
-
+        if(removeDeleteButton){
+            holder.deleteButton.setVisibility(View.GONE);
+        }
        if(item.getImage().isEmpty()){
            holder.imageView.setVisibility(View.GONE);
        }else{
            Picasso.get().load(item.getImage()).placeholder(R.drawable.campas).into(holder.imageView);
        }
+
 
        holder.timeTv.setText(""+item.getDate());
        holder.descriptionTv.setText(""+item.getDescription());
@@ -61,14 +70,7 @@ public class NoticeListAdapter extends RecyclerView.Adapter<NoticeListAdapter.My
                 }
             }
         });
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(listner!=null){
-                    listner.onEdit(holder.getAdapterPosition(),item);
-                }
-            }
-        });
+
 
 
 
@@ -82,14 +84,13 @@ public class NoticeListAdapter extends RecyclerView.Adapter<NoticeListAdapter.My
     public class MyViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener{
         ZoomageView imageView;
         TextView descriptionTv,timeTv;
-        Button editButton,deleteButton;
+        Button deleteButton;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             timeTv=itemView.findViewById(R.id.ni_dateTv);
             descriptionTv=itemView.findViewById(R.id.ni_descriptionTv);
             imageView=itemView.findViewById(R.id.ni_imageViewId);
-            editButton=itemView.findViewById(R.id.ni_editButtonId);
             deleteButton=itemView.findViewById(R.id.ni_deleteButtonId);
             itemView.setOnClickListener(this);
         }

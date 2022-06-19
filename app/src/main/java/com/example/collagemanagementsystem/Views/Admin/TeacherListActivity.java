@@ -56,6 +56,7 @@ public class TeacherListActivity extends AppCompatActivity {
                 Intent intent=new Intent(TeacherListActivity.this,AddNewTeacherActivity.class);
                 intent.putExtra("action","create");
                 intent.putExtra("phone","");
+                intent.putExtra("comeFrom","admin");
                 startActivity(intent);
             }
         });
@@ -71,6 +72,7 @@ public class TeacherListActivity extends AppCompatActivity {
                 Intent intent=new Intent(TeacherListActivity.this,AddNewTeacherActivity.class);
                 intent.putExtra("action",AddNewTeacherActivity.ACTION_EDIT);
                 intent.putExtra("phone",teacher.getPhone());
+                intent.putExtra("comeFrom","admin");
                 startActivity(intent);
             }
 

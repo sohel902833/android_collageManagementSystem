@@ -15,7 +15,11 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.31666666666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_notice_list.xml" value="0.36982968369829683" />
+        <entry key="app/src/main/res/layout/activity_student_attendance.xml" value="0.2599401453612655" />
+        <entry key="app/src/main/res/layout/activity_student_attendance_profile.xml" value="0.2599401453612655" />
         <entry key="app/src/main/res/layout/activity_student_list.xml" value="0.31666666666666665" />
+        <entry key="app/src/main/res/layout/activity_student_main.xml" value="0.2599401453612655" />
+        <entry key="app/src/main/res/layout/activity_student_present_details.xml" value="0.2599401453612655" />
         <entry key="app/src/main/res/layout/activity_teacher_list.xml" value="0.10572916666666667" />
         <entry key="app/src/main/res/layout/activity_teacher_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_teacher_single_class_room_activitity.xml" value="0.2599401453612655" />
@@ -28,11 +32,18 @@
         <entry key="app/src/main/res/layout/create_new_class_dialog_layout.xml" value="0.2599401453612655" />
         <entry key="app/src/main/res/layout/custom_alert_dialog.xml" value="0.31666666666666665" />
         <entry key="app/src/main/res/layout/department_item_layout.xml" value="0.31666666666666665" />
+        <entry key="app/src/main/res/layout/fragment_student_home.xml" value="0.2599401453612655" />
+        <entry key="app/src/main/res/layout/fragment_student_notice.xml" value="0.2599401453612655" />
+        <entry key="app/src/main/res/layout/fragment_student_profile.xml" value="0.24754168448054725" />
         <entry key="app/src/main/res/layout/fragment_teacher_home.xml" value="0.2599401453612655" />
         <entry key="app/src/main/res/layout/fragment_teacher_notice.xml" value="0.2599401453612655" />
+        <entry key="app/src/main/res/layout/fragment_teacher_profile.xml" value="0.2599401453612655" />
         <entry key="app/src/main/res/layout/fragment_teacher_students.xml" value="0.2599401453612655" />
         <entry key="app/src/main/res/layout/notice_item_layout.xml" value="0.36982968369829683" />
+        <entry key="app/src/main/res/layout/single_student_attendance_item_layout.xml" value="0.2599401453612655" />
         <entry key="app/src/main/res/layout/spinner_item_layout.xml" value="0.31666666666666665" />
+        <entry key="app/src/main/res/layout/student_attendance_item_layout.xml" value="0.2599401453612655" />
+        <entry key="app/src/main/res/layout/student_class_item_layout.xml" value="0.2599401453612655" />
         <entry key="app/src/main/res/layout/student_item_layout.xml" value="0.31666666666666665" />
         <entry key="app/src/main/res/layout/student_present_item_layout.xml" value="0.25908507909362977" />
         <entry key="app/src/main/res/layout/teacher_class_item_layout.xml" value="0.2599401453612655" />

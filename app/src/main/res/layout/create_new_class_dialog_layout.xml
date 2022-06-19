@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:padding="10dp"
-                    android:hint="Enter Subject Name"
+                    android:hint="Enter Subject Code"
                     android:id="@+id/cnc_subjectCodeEt"
                     android:drawablePadding="5dp"
                     />

@@ -176,12 +176,13 @@ public class TeacherHomeFragment extends Fragment {
 
         Teacher teacher=userDb.getTeacherData();
 
-        Query query = ApiRef.classRef
-                .orderByChild("teacherPhone")
-                .equalTo(teacher.getPhone());
+        if(teacher!=null){
+            Query query = ApiRef.classRef
+                    .orderByChild("teacherPhone")
+                    .equalTo(teacher.getPhone());
             query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()){
                         teacherClassList.clear();
                         for(DataSnapshot snapshot:dataSnapshot.getChildren()){
@@ -193,13 +194,15 @@ public class TeacherHomeFragment extends Fragment {
                     }else{
                         progressDialog.dismiss();
                     }
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                progressDialog.dismiss();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    progressDialog.dismiss();
+                }
+            });
+        }
+
     }
 
     private void showCreateNewClassDialog() {

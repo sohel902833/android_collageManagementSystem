@@ -13,11 +13,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.collagemanagementsystem.LocalDb.UserDb;
+import com.example.collagemanagementsystem.Model.Student;
 import com.example.collagemanagementsystem.Model.Teacher;
 import com.example.collagemanagementsystem.Model.User;
 import com.example.collagemanagementsystem.R;
 import com.example.collagemanagementsystem.Services.AppBar;
 import com.example.collagemanagementsystem.Views.Admin.AdminMainActivity;
+import com.example.collagemanagementsystem.Views.Student.StudentMainActivity;
 import com.example.collagemanagementsystem.Views.Teacher.TeacherMainActivity;
 import com.example.collagemanagementsystem.api.ApiRef;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private AppBar appBar;
     private EditText phoneEt,passwordEt;
     private Button teacherLoginButton,studentLoginButton;
-    private static  final String ADMIN_PHONE="zubu";
+    private static  final String ADMIN_PHONE="01740244739";
     private static  final String ADMIN_PASSWORD="zubu";
 
 
@@ -97,6 +99,8 @@ public class LoginActivity extends AppCompatActivity {
                 sendUserToAdminMainActivity();
             }if (user.getUserType().equals(User.TEACHER)) {
                 sendUserToTeacherMainActivity();
+            }if (user.getUserType().equals(User.STUDENT)) {
+                sendUserToStudentMainActivity();
             }
         }
     }
@@ -151,14 +155,53 @@ public class LoginActivity extends AppCompatActivity {
             //check user trying to login as a teacher or student
             if(STATE.equals("student")){
                 //this user trying to login as a student check student db
-                Toast.makeText(this, "Student Login", Toast.LENGTH_SHORT).show();
+               loginStudent(phone,password);
             }else if(STATE.equals("teacher")){
                 //this user trying to login as a teacher check teacher db
                 loginTeacher(phone,password);
-                Toast.makeText(this, "Teacher Login", Toast.LENGTH_SHORT).show();
+
 
             }
         }
+
+
+    }
+
+    private void loginStudent(String phone, String password) {
+        progressDialog.setMessage("Login Student");
+        progressDialog.setTitle("Please Wait.");
+
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        ApiRef.studentRef.child(phone)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            Student student=dataSnapshot.getValue(Student.class);
+                            if(student.getRegistration().equals(password)){
+                                User user =new User(student.getRoll(),student.getRegistration(),User.STUDENT);
+                                userDb.setUserData(user);
+                                userDb.setStudentData(student);
+                                sendUserToStudentMainActivity();
+                                Toast.makeText(LoginActivity.this, "Login Successful.", Toast.LENGTH_SHORT).show();
+                            }else{
+                                progressDialog.dismiss();
+                                Toast.makeText(LoginActivity.this, "Registration Doesn't Matched.", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            progressDialog.dismiss();
+                            Toast.makeText(LoginActivity.this, "No Student Found With This Roll Number.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
     }
@@ -210,6 +253,12 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void sendUserToAdminMainActivity() {
         Intent intent=new Intent(LoginActivity.this, AdminMainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+    private void sendUserToStudentMainActivity() {
+        Intent intent=new Intent(LoginActivity.this, StudentMainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

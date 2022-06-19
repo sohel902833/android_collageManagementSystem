@@ -47,7 +47,6 @@ public class TeacherClassListAdapter extends RecyclerView.Adapter<TeacherClassLi
 
        holder.subjectCodeTv.setText("Sub Code: "+item.getSubjectCode());
        holder.subjectNameTv.setText(""+item.getSubjectName());
-       holder.subjectNameTv.setText(""+item.getSubjectName());
 
 
         ApiRef.batchRef.child(item.getBatchId()).addListenerForSingleValueEvent(new ValueEventListener() {

@@ -1,14 +1,24 @@
 package com.example.collagemanagementsystem.Model;
 
 public class Notice {
-    String noticeId,description="",image="",date;
+    String noticeId,description="",image="",date,teacherId="";
 
     public Notice(){}
-    public Notice(String noticeId, String description, String image,String date) {
+    public Notice(String noticeId, String description, String image,String date,String teacherId) {
         this.noticeId = noticeId;
         this.description = description;
         this.image = image;
+        this.teacherId=teacherId;
         this.date = date;
+    }
+
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getNoticeId() {

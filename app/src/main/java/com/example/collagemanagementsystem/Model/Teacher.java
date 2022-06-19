@@ -1,7 +1,7 @@
 package com.example.collagemanagementsystem.Model;
 
 public class Teacher {
-    String teacherId,name,email,phone,password,code;
+    String teacherId,name,email,phone="",password,code;
     public Teacher(){}
 
     public Teacher(String teacherId, String name, String email, String phone, String password, String code) {

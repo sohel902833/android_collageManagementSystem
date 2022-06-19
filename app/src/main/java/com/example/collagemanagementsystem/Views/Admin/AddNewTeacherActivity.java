@@ -37,27 +37,40 @@ public class AddNewTeacherActivity extends AppCompatActivity {
 
     private EditText teacherNameEt,teacherPhoneEt,teacherIdEt,teacherPasswordEt,emailEt;
     private Button createTeacherButton;
-    private TextView titleTv;
+    private TextView titleTv,teacherIdTitle,teacherPhoneTitle;
 
     private ProgressDialog progressDialog;
     String email="";
 
-     String action="";
+     String action="",comeFrom="admin";
      String editUserPhone="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_teacher);
-        init();
+
         action=getIntent().getStringExtra("action");
         editUserPhone=getIntent().getStringExtra("phone");
-
+        comeFrom=getIntent().getStringExtra("comeFrom");
+        init();
         if(action.equals(ACTION_EDIT)){
-            titleTv.setText("Edit Teacher");
-            createTeacherButton.setText("Update Teacher");
-            teacherPhoneEt.setVisibility(View.GONE);
-            teacherIdEt.setVisibility(View.GONE);
+            if(comeFrom.equals("teacherProfile")){
+                titleTv.setText("Update Your Profile");
+                createTeacherButton.setText("Update");
+                teacherPhoneEt.setVisibility(View.GONE);
+                teacherIdEt.setVisibility(View.GONE);
+                teacherIdTitle.setVisibility(View.GONE);
+                teacherPhoneTitle.setVisibility(View.GONE);
+            }else{
+                titleTv.setText("Edit Teacher");
+                createTeacherButton.setText("Update Teacher");
+                teacherPhoneEt.setVisibility(View.GONE);
+                teacherIdEt.setVisibility(View.GONE);
+                teacherIdTitle.setVisibility(View.GONE);
+                teacherPhoneTitle.setVisibility(View.GONE);
+            }
+
         }
 
         teacherIdEt.addTextChangedListener(new TextWatcher() {
@@ -146,11 +159,22 @@ public class AddNewTeacherActivity extends AppCompatActivity {
         //setup appbar
         toolbar=findViewById(R.id.appBarId);
         appBar=new AppBar(this);
-        appBar.init(toolbar,"Add New Teacher");
+        if(action.equals(ACTION_EDIT)){
+            if(comeFrom.equals("teacherProfile")){
+                appBar.init(toolbar,"Update Profile");
+            }else{
+                appBar.init(toolbar,"Update Teacher");
+            }
+        }else{
+            appBar.init(toolbar,"Add New Teacher");
+        }
+
         appBar.hideBackButton();
         //end setup appbar;
 
         teacherIdEt=findViewById(R.id.ant_teacherId);
+        teacherIdTitle=findViewById(R.id.teacherIdTitle);
+        teacherPhoneTitle=findViewById(R.id.teacherPhoneTitle);
         teacherNameEt=findViewById(R.id.ant_teacherNameEt);
         teacherPhoneEt=findViewById(R.id.ant_teacherPhoneEt);
         teacherPasswordEt=findViewById(R.id.ant_PasswordEt);

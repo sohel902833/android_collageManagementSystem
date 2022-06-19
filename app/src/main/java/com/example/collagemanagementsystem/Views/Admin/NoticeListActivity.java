@@ -31,6 +31,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class NoticeListActivity extends AppCompatActivity {
@@ -81,6 +83,7 @@ public class NoticeListActivity extends AppCompatActivity {
                 customDialog.onActionClick(new CustomDialogClickListner() {
                     @Override
                     public void onPositiveButtonClicked(View view, AlertDialog dialog) {
+                        dialog.dismiss();
                         deleteNotice(notice);
                     }
 
@@ -115,8 +118,9 @@ public class NoticeListActivity extends AppCompatActivity {
                     for(DataSnapshot snapshot1:snapshot.getChildren()){
                         Notice notice=snapshot1.getValue(Notice.class);
                         noticeList.add(notice);
-                        noticeListAdapter.notifyDataSetChanged();
                     }
+                    Collections.reverse(noticeList);
+                    noticeListAdapter.notifyDataSetChanged();
                 }else{
                 }
             }

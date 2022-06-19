@@ -18,7 +18,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.collagemanagementsystem.LocalDb.UserDb;
+import com.example.collagemanagementsystem.Model.Attendance;
 import com.example.collagemanagementsystem.Model.Notice;
+import com.example.collagemanagementsystem.Model.User;
 import com.example.collagemanagementsystem.R;
 import com.example.collagemanagementsystem.Services.AppBar;
 import com.example.collagemanagementsystem.Services.CustomDialog;
@@ -50,6 +53,7 @@ public class CreateNoticeActivity extends AppCompatActivity {
     public static final int PICK_IMAGE=100;
 
     private StorageReference storageReference;
+    private UserDb userDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +113,7 @@ public class CreateNoticeActivity extends AppCompatActivity {
 
         progressDialog=new ProgressDialog(this);
         storageReference= FirebaseStorage.getInstance().getReference().child("NoticeImages");
-
+        userDb=new UserDb(this);
     }
 
 
@@ -145,9 +149,11 @@ public class CreateNoticeActivity extends AppCompatActivity {
         progressDialog.show();
 
         String noticeId= ApiRef.noticeRef.push().getKey();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
-        String currentDateandTime = sdf.format(new Date());
-        Notice notice=new Notice(noticeId,description,imageUri,currentDateandTime);
+       String currentDateandTime = Attendance.getTodayDate()+ " at "+ Attendance.getCurrentTime();
+
+        String teacherId=userDb.getUserData().getUserType().equals(User.TEACHER)?userDb.getTeacherData().getPhone():"";
+
+        Notice notice=new Notice(noticeId,description,imageUri,currentDateandTime,teacherId);
         ApiRef.noticeRef
                 .child(noticeId)
                 .setValue(notice)

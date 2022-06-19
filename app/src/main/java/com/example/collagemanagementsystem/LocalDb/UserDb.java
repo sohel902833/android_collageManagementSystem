@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.example.collagemanagementsystem.Model.Student;
 import com.example.collagemanagementsystem.Model.Teacher;
 import com.example.collagemanagementsystem.Model.User;
 import com.example.collagemanagementsystem.Views.Admin.AdminMainActivity;
@@ -33,7 +34,22 @@ public class UserDb {
         editor.putString("teacher", json);
         editor.commit();
     }
-    public Teacher getTeacherData(){
+    public void setStudentData(Student student) {
+        SharedPreferences sharedPreferences=activity.getSharedPreferences("studentDb", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(student);
+        editor.putString("student", json);
+        editor.commit();
+    }
+    public Student getStudentData(){
+        Student student =null;
+        SharedPreferences sharedPreferences=activity.getSharedPreferences("studentDb", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("student","");
+        student = gson.fromJson(json, Student.class);
+        return  student;
+    }  public Teacher getTeacherData(){
         Teacher teacher =null;
         SharedPreferences sharedPreferences=activity.getSharedPreferences("teacherDb", Context.MODE_PRIVATE);
         Gson gson = new Gson();
@@ -57,10 +73,15 @@ public class UserDb {
         SharedPreferences userShared = activity.getSharedPreferences("teacherDb", Context.MODE_PRIVATE);
         userShared.edit().clear().apply();
     }
+  public void removeStudentData(){
+        SharedPreferences userShared = activity.getSharedPreferences("studentDb", Context.MODE_PRIVATE);
+        userShared.edit().clear().apply();
+    }
 
     public void logoutUser(Activity activity){
         removeUserData();
         removeTeacherData();
+        removeStudentData();
         Intent intent=new Intent(activity, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
